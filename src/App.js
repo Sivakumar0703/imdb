@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {Routes,Route} from 'react-router-dom'
+import Register from "./components/register/register";
+import Login from "./components/login/login";
+import { Provider } from "react-redux";
+import { store } from "./redux/store/store";
+import Homepage from "./components/homepage/homepage";
+import Profile from "./components/profile/profile";
+import AddMovie from "./routes/addMovie/addMovie";
+import ProtectRoutes from "./components/protectRoutes/protectRoutes";
+
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Provider store={store}>
+      <Routes>
+        <Route path="/sign-up" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/profile" element={ <ProtectRoutes> <Profile />  </ProtectRoutes> } />
+        <Route path="/add_movie" element={ <ProtectRoutes> <AddMovie /> </ProtectRoutes>} />
+      </Routes>
+      </Provider> 
     </div>
   );
 }
