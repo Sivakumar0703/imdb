@@ -2,6 +2,7 @@ import {useState} from 'react'
 import { registerUser, userLogicsTogglePage, userLogicsValidateInputDiv } from '../../logics/user.logics'
 import { getAllUser } from '../../redux/middleware/user.thunk';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const InputComponent = () => {
 
@@ -11,67 +12,29 @@ const InputComponent = () => {
   const dispatch = useDispatch();
   const {userList,url} = useSelector(state => state.userReducer);
 
-  console.log("user-list",userList)
 
 
   function handleChange(e){
     setNewPerson(prev => ({...prev , [e.target.name]:e.target.value}))
   }
 
-  
-// const validateFirstDiv = (block) => {
-//     const firstDiv = document.getElementById(block);
-//     const inputs = firstDiv.querySelectorAll('input');
-//     for (let input of inputs) {
-//         if (!input.checkValidity()) {
-//             input.reportValidity();
-//             return false;
-//         }
-//     }
-//     return true;
-// };
-
-//     async function register(e){
-//         e.preventDefault();
-//      if(userLogicsValidateInputDiv("block2")){
-//         const closeModalButton = document.getElementById("close-the-modal");
-//         console.log("function called")
-//         console.log("form-data",newPerson)
-//         registerUser(url,newPerson); // register new actor/producer in db
-//         let data = {url:url,token:token}
-//         dispatch(getAllUser(data)); // receive update user list to choose the new actor/producer
-//         closeModalButton?.click(); // close the modal
-//     }  
-//   }
-
   async function register(e){
     try {
         e.preventDefault();
         if(userLogicsValidateInputDiv("block2")){
         const closeModalButton = document.getElementById("close-the-modal");
-        console.log("function called")
-        console.log("form-data",newPerson)
         let registerationResult = await registerUser({url,data:newPerson}); // register new actor/producer in db
         let data = {url:url,token:token};
         if(registerationResult){
-            dispatch(getAllUser(data)); // receive update user list to choose the new actor/producer
-            closeModalButton?.click(); // close the modal
+          dispatch(getAllUser(data)); // receive update user list to choose the new actor/producer
+          closeModalButton?.click(); // close the modal
         }     
         }    
     } catch (error) {
-        console.log(error)
+      toast.error("error in registering new movie".toUpperCase())
+      console.log(error)
     }
   }
-
-//   function togglePage(e){
-//     if(userLogicsValidateInputDiv("block1")){
-//     const isBlock2Active = e.target.value == "next" ? true : false;
-//     const block1 = window.document.getElementById("block1");
-//     const block2 = window.document.getElementById("block2");
-//     block1.style.display = isBlock2Active ? "none" : "block";
-//     block2.style.display = isBlock2Active ? "block" : "none";
-//     }
-//   }
 
 
   return (

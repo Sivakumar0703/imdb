@@ -2,20 +2,15 @@ import {useEffect,useState}  from 'react'
 import Navbar from '../navbar/navbar'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserByToken, updateUser } from "../../redux/middleware/user.thunk";
-import AutoCompleteSearch from '../autoCompleteSearch/autoCompleteSearch';
 import { toast } from 'react-toastify';
 
 const Profile = () => {
 
     const today = new Date().toISOString().split("T")[0];
     const {user,isLoading,url} = useSelector(state => state.userReducer);
-    // const {movies} = useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
     const token = sessionStorage.getItem("user");
     const [disabled , setdisabled] = useState(true);
-    const [userType , setUserType] = useState('');
-    // const [selectedMovies , setSelectedMovies] = useState([]);
-    // const [selectedOptions , setSelectedOptions] = useState({gender:"" , category:""})
     const [form , setForm] = useState({
         gender:"",
         dob:"",
@@ -44,7 +39,6 @@ const Profile = () => {
     function handleChange(e){
         console.log(e.target.name)
         setForm(prev => ({ ...prev , [e.target.name]:e.target.value }))
-        // setUserType(e.target.value);
     }
 
     function editProfile(){
@@ -67,10 +61,6 @@ const Profile = () => {
         form.url = url;
         dispatch(updateUser(form));
         setdisabled(true)
-
-        // const formData = new FormData(e.target);
-        // const formObject = Object.fromEntries(formData.entries());
-        // console.log("form-data",formObject);
     }
 
 
@@ -120,13 +110,6 @@ const Profile = () => {
                  <label htmlFor="category-producer">  <input type="radio" id="category-producer" name="category" value="producer" required disabled={disabled} onChange={ handleChange} checked={form.category == "producer"} /> PRODUCER   </label> 
                 </div>  <br/>
 
-                {/* {
-                    (userType == "actor" || userType == "producer") && (
-                    <div>
-                        <AutoCompleteSearch selectedMovies={selectedMovies} setSelectedMovies={setSelectedMovies} />
-                    </div>
-                )} */}
-
                 <div>
                  <label htmlFor="bio" className="label">BIO</label> <br/>
                  <textarea name="bio" id="bio" minLength="200" rows="6" defaultValue={form.bio} placeholder="Write about you here..." style={{padding:"5px"}}  disabled={disabled} onChange={ handleChange}></textarea>  
@@ -142,9 +125,6 @@ const Profile = () => {
             
             </>
         }
-        
-        
-
     </div>
   )
 }

@@ -4,10 +4,8 @@ const ProtectRoutes = ({children}) => {
     const token = sessionStorage.getItem("user");
 
     if(!token){
-        return <Navigate to="/" />
+      return <Navigate to="/" />
     }
-
-
   return children
 }
 

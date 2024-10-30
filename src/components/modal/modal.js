@@ -1,11 +1,7 @@
-import React from 'react'
+
 import InputComponent from '../newPersonInputComponent/inputComponent'
 
 const Modal = () => {
-
-    function savePerson(){
-
-    }
 
   return (
     <div>
@@ -21,10 +17,6 @@ const Modal = () => {
              <div className="modal-body">
                 <InputComponent />
              </div>
-             {/* <div className="modal-footer">
-               <button type="button" className="btn btn-success" onClick={savePerson} data-bs-dismiss="modal">POST</button>
-               <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
-             </div> */}
            </div>
          </div>
         </div>

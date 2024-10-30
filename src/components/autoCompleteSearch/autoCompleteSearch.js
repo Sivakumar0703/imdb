@@ -9,7 +9,6 @@ const AutoCompleteSearch = ({selectedUsers , setSelectedUsers,isProducer,setForm
     function handleChange(user){
         
         if(isProducer){
-            console.log("handle change",user)
             setSelectedUsers([user]) 
             setFormData((prev) => ({...prev , producer:[user]}))  
         } else {

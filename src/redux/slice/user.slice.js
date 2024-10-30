@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addRecentlyActedMovie, getAllUser, getUser, getUserByToken, updateUser } from "../middleware/user.thunk";
-// import { toast } from "react-toastify";
-
-
+import { getAllUser, getUser, getUserByToken, updateUser } from "../middleware/user.thunk";
 
 
 const userSlice = createSlice({
@@ -17,9 +14,8 @@ const userSlice = createSlice({
   reducers: {
     // get data on page reload
     getUserData:(state, action) => {
-        state.user = action.payload;
-        // console.log("from slice",action)
-        state.isLoading = false;
+      state.user = action.payload;
+      state.isLoading = false;
     },
   },
   extraReducers:(builder) => {
@@ -43,9 +39,6 @@ const userSlice = createSlice({
     .addCase(getAllUser.fulfilled , (state,action) => {
       state.userList = action.payload;
     })
-    // .addCase(addRecentlyActedMovie , (state,action) => {
-    //   state.userList = action.payload;
-    // })
 
   }
 

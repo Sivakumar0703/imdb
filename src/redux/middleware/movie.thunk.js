@@ -16,12 +16,10 @@ export const getMovies = createAsyncThunk("movie/getMovies" ,
 export const sampleMovies = createAsyncThunk("movie/sampleMovies" , 
     async function (data,thunkApi) {
         try {
-            console.log("sample thunk")
             return await getSampleMoviesData() 
         } catch (error) {
             return console.log(thunkApi.rejectWithValue(error.message));
-        }
-        
+        }  
     }
 )
 
@@ -31,7 +29,6 @@ export const addMovie = createAsyncThunk("movie/addMovie" ,
     async function (data , thunkApi){
         try {
             const result = await movieLogicAddNewMovie(data);
-            console.log("### thunk ",result)
             return result
         } catch (error) {
             return console.log(thunkApi.rejectWithValue(error.message));

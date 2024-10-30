@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react'
 import Navbar from '../../components/navbar/navbar'
 import { useDispatch, useSelector } from 'react-redux';
-import { addRecentlyActedMovie, getAllUser } from '../../redux/middleware/user.thunk';
+import { getAllUser } from '../../redux/middleware/user.thunk';
 import AutoCompleteSearch from '../../components/autoCompleteSearch/autoCompleteSearch';
 import Modal from '../../components/modal/modal';
 import { toast } from 'react-toastify';
@@ -21,15 +21,14 @@ const AddMovie = () => {
     });
     const dispatch = useDispatch();
     const token = sessionStorage.getItem("user");
-    const {url,userList} = useSelector(state => state.userReducer);
+    const {url} = useSelector(state => state.userReducer);
     const [selectedUsers , setSelectedUsers] = useState([]);
     const [selectedProducer , setSelectedProducer] = useState([]);
     const [imageLoading , setImageLoading] = useState(false);
-    const {myUrl,movies,myMovies} = useSelector(state => state.movieReducer);
+    const {myUrl} = useSelector(state => state.movieReducer);
     const inputRef = useRef(null);
     const navigate = useNavigate();
-    console.log("add page",movies)
-    console.log("selectedProducer",selectedProducer)
+
 
 
     function handleChange(e){
@@ -44,33 +43,6 @@ const AddMovie = () => {
     }
 
     async function handleImage(e){
-      // try {
-      //   e.preventDefault();
-      //   setImageLoading(true);
-      //  const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dxqmt9w7m/image/upload`
-      //  const image = e.target?.files[0];
-      //  if(!image){
-      //    toast.warn("image file missing".toUpperCase());
-      //    return
-      //   }
-      //  const data = new FormData()
-      //  data.append("file",image)
-      //  data.append("upload_preset","imdb_project")
-      //  data.append("cloud_name","dxqmt9w7m")
-
-      //   const imageData = await fetch(cloudinaryUrl , {
-      //   method:"POST",
-      //   body:data
-      //  })
-
-      //  const uploadedImageResponse = await imageData.json()
-      //  console.log("image",uploadedImageResponse,uploadedImageResponse.url)
-      //  setFormData((prev) => ({...prev , image:uploadedImageResponse.url}))
-      //  setImageLoading(false);
-      // } catch (error) {
-      //   setImageLoading(false);
-      //   console.log(error)
-      // }
       let data = {setImageLoading,setFormData,imageFile:e.target.files[0]
       }
       movieLogicHandleImage(data)
@@ -86,53 +58,6 @@ const AddMovie = () => {
       }
       dispatch(addMovie(data))
     }
-
-    // useEffect(() => {
-
-    //   let firstRun = false;
-
-    //   if(firstRun){
-    //     console.log("----------------------------------------");
-    //     const lastAddedMovie = [...myMovies].reverse();
-    //     let data = {selectedProducer,
-    //       selectedUsers,
-    //       movieName:formData.title,
-    //       movie:lastAddedMovie[0],
-    //       token,
-    //       myUrl,
-    //       setFormData,
-    //       setSelectedUsers,
-    //       setSelectedProducer
-    //     }
-    //     dispatch(addRecentlyActedMovie(data));
-    //     firstRun = false;
-    //   }
-
-    //   firstRun = true;
-
-    // },[myMovies])
-
-
-
-    // function addNewMovie(){     
-    //   for(const key in formData){
-    //     if(!formData[key]){
-    //       toast.warn("please fill all the fields".toUpperCase())
-    //       return
-    //     }
-    //   }
-
-    //   if(!formData.stars.length){
-    //     toast.warn("please fill all the fields".toUpperCase());
-    //     return
-    //   }
-
-    //   if(!formData.producer.length){
-    //     toast.warn("please fill all the fields".toUpperCase());
-    //     return
-    //   }
-    //     console.log("done")
-    // }
 
     useEffect(() => {
       if(token){
@@ -177,7 +102,6 @@ const AddMovie = () => {
           <button className="btn btn-info" type='button' data-bs-toggle="modal" data-bs-target="#addPersonModal" style={{margin:"5px 10px"}}>ADD</button>
           <br/>
           <AutoCompleteSearch  selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} isProducer={false} setFormData={setFormData} />
-          {/* <input className="input-field" name="stars" id="crew" type="text" placeholder="MOVIE CAST CREW" value={formData.stars} onChange={handleChange}  required /> */}
           {/* listing selected cast crew members */}
          <div style={{marginTop:"2px"}}>
             {
@@ -203,7 +127,6 @@ const AddMovie = () => {
 
            <br/>
           <AutoCompleteSearch  selectedUsers={selectedProducer} setSelectedUsers={setSelectedProducer} isProducer={true} setFormData={setFormData} />
-          {/* <input className="input-field" name="producer" id="producer" type="text" placeholder="PRODUCER NAME" value={formData.producer} onChange={handleChange}  required /> */}
           {/* listing producer */}
         <div style={{marginTop:"2px"}}>
             {

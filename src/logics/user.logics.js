@@ -8,11 +8,7 @@ export  async function registerUser(payload){
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload.data),
-        });
-            // response
-            // .then((res) => res.json())
-            // .then((data) => toast(data.message.toUpperCase()) )
-            // .catch(error => {console.log(error.message); toast.error("RESGISTERATION FAILED")})  
+        });  
            const data =  await response.json()    
            toast(data.message.toUpperCase())
            return true
@@ -26,7 +22,7 @@ export  async function registerUser(payload){
 export async function getUserData(data){
     try {
         let payload = {email:data.email , password:data.password}
-      const login = await fetch(`${data.url}/login`, {
+        const login = await fetch(`${data.url}/login`, {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +30,6 @@ export async function getUserData(data){
         body: JSON.stringify(payload) 
     });
     const response = await login.json();
-    console.log("response",response.userData)
     sessionStorage.setItem("user",response.userData.token);
     toast.success(response.message); 
     return response.userData       
@@ -45,7 +40,7 @@ export async function getUserData(data){
 
 export async function getUserDataByToken(data){
     try {
-      const getUser = await fetch(`${data.url}/getUser`, {
+        const getUser = await fetch(`${data.url}/getUser`, {
         method: 'GET', 
         headers: {
             'Content-Type': 'application/json',
@@ -65,8 +60,7 @@ export async function updateUserByToken(data){
         const token = data.token;
         delete data.url;
         delete data.token;
-        console.log("to backend",data)
-      const getUser = await fetch(`${url}/update_user`, {
+        const getUser = await fetch(`${url}/update_user`, {
         method: 'PUT', 
         headers: {
             'Content-Type': 'application/json',
@@ -76,7 +70,6 @@ export async function updateUserByToken(data){
         body: JSON.stringify(data),
     });
     const response = await getUser.json();
-    console.log("response from db",response.updatedUser)
     return response.updatedUser       
     } catch (error) {
         toast.error(error.message.toUpperCase());
@@ -85,7 +78,6 @@ export async function updateUserByToken(data){
  
 export async function getAllUserByToken(data){
     try {
-        console.log("logic called",data.url)
         const getAllUser = await fetch(`${data.url}/get_all_user`, {
             method: 'GET', 
             headers: {
@@ -125,17 +117,16 @@ export function emailVerification(email){
 }
 
 // adding new person using input component
-
  export function userLogicsValidateInputDiv(block){
-        const firstDiv = document.getElementById(block);
-        const inputs = firstDiv.querySelectorAll('input');
-        for (let input of inputs) {
-            if (!input.checkValidity()) {
-                input.reportValidity();
-                return false;
-            }
+    const firstDiv = document.getElementById(block);
+    const inputs = firstDiv.querySelectorAll('input');
+    for (let input of inputs) {
+        if (!input.checkValidity()) {
+            input.reportValidity();
+            return false;
         }
-        return true;
+    }
+    return true;
 }
 
 export function userLogicsTogglePage(e){
@@ -187,9 +178,8 @@ export async function userLogicAddRecentlyActedMovie(data){
             data.setSelectedUsers([])
             data.setSelectedProducer([])
             data.inputRef.current.value = null;
-       console.log("final");
        data.navigate("/");
     } catch (error) {
-        
+        console.log("error",error)
     }
 }

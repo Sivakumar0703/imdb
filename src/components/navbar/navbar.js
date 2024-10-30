@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getMovies } from "../../redux/middleware/movie.thunk";
@@ -8,7 +8,7 @@ import { searchResultForMyMovies } from "../../redux/slice/movie.slice";
 const Navbar = () => {
 
     const [search , setSearch] = useState("");
-    const {myUrl,imdbUrl,myMovies,get} = useSelector(state => state.movieReducer);
+    const {myUrl,imdbUrl,myMovies} = useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
     const token = sessionStorage.getItem("user");
     const navigate = useNavigate();

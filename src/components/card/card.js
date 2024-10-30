@@ -1,11 +1,9 @@
-import React from 'react'
 import { shrinkTheString } from '../../logics/movies.logics'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getSelectedCard } from '../../redux/slice/movie.slice'
 
 const Card = ({movie}) => {
-  console.log("card",movie)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,7 +29,6 @@ const Card = ({movie}) => {
             </div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item">producer : {movie.producer ? movie.producer.name : "NO DATA" } </li>
-              {/* <li className="list-group-item">producer : {movie.producer ? movie.producer : "NO DATA" } </li> */}
               <li className="list-group-item cast-crew-namelist"> cast crew :
                 {
                   typeof(movie.stars) == "object" ?

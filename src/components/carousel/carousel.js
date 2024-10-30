@@ -1,12 +1,11 @@
-import React from 'react'
 
 const Carousel = ({movies}) => {
-    console.log("car",movies);
+
     
   return (
     <div>
         <div id="carouselExample" className="carousel slide">
-             <div className="carousel-inner">
+            <div className="carousel-inner">
     {
         movies.length && movies.slice(0,3).map((movie) => {
             return <div key={movie.title} className="carousel-item active">

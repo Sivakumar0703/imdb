@@ -10,7 +10,6 @@ const ViewCard = () => {
     const [cardDetail , setCardDetail] = useState(selectedCard);
     const dispatch = useDispatch();
     const token = sessionStorage.getItem("user");
-    console.log(selectedCard);
     const{id} = useParams();
 
     useEffect(()=>{
@@ -18,7 +17,6 @@ const ViewCard = () => {
     },[])
 
     useEffect(() => {
-        console.log("render",id,myMovies)
         retriveSelectedCardDetail()
     },[isLoading])
 

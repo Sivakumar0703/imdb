@@ -12,10 +12,9 @@ import ViewCard from "./routes/viewCard/viewCard";
 
 
 function App() {
-  console.log("i am")
   return (
     <div className="App">
-       <Provider store={store}>
+    <Provider store={store}>
       <Routes>
         <Route path="/sign-up" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -24,7 +23,7 @@ function App() {
         <Route path="/add_movie" element={ <ProtectRoutes> <AddMovie /> </ProtectRoutes>} />
         <Route path="/view_details/:id" element={ <ProtectRoutes> <ViewCard /> </ProtectRoutes>} />
       </Routes>
-      </Provider> 
+    </Provider> 
     </div>
   );
 }
