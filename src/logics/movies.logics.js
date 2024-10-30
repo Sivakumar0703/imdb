@@ -27,6 +27,27 @@ export async function getMoviesData(data){
     }
 }
 
+// show movies on homepage
+export async function getSampleMoviesData(){
+    try {
+        console.log("sample fn called")
+        const url = `https://imdb188.p.rapidapi.com/api/v1/searchIMDB`
+        const imdbHeaders = {
+            'x-rapidapi-key': '57f68575bbmsh783b205447e4fa8p16c696jsn58c36ad95b02',
+            'x-rapidapi-host': 'imdb188.p.rapidapi.com'
+        }
+        const getMovies = await fetch(url, {
+        method: 'GET', 
+        headers: imdbHeaders
+    });
+    const response = await getMovies.json();
+    console.log("logic response",response)
+    return response.data       
+    } catch (error) {
+        toast.error(error.message.toUpperCase());
+    }
+}
+
 // if the string length is > 23 the truncate the string
 export function shrinkTheString(str) {
     if (str.length > 23) {

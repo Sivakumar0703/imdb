@@ -12,7 +12,7 @@ const userSlice = createSlice({
     userList:[],
     isLoading: false ,
     error : null,
-    url:"http://localhost:8080/api/user",
+    url:"https://imdb-backend-nssv.onrender.com/api/user",
   },
   reducers: {
     // get data on page reload

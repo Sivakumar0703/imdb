@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getMoviesData, movieLogicAddNewMovie, movieLogicGetMoviesCreatedByMe } from "../../logics/movies.logics";
+import { getMoviesData, getSampleMoviesData, movieLogicAddNewMovie, movieLogicGetMoviesCreatedByMe } from "../../logics/movies.logics";
 
 // movies on search
 export const getMovies = createAsyncThunk("movie/getMovies" , 
@@ -11,6 +11,19 @@ export const getMovies = createAsyncThunk("movie/getMovies" ,
         }
     }
 );
+
+// sample movie data
+export const sampleMovies = createAsyncThunk("movie/sampleMovies" , 
+    async function (data,thunkApi) {
+        try {
+            console.log("sample thunk")
+            return await getSampleMoviesData() 
+        } catch (error) {
+            return console.log(thunkApi.rejectWithValue(error.message));
+        }
+        
+    }
+)
 
 
 // add new movie

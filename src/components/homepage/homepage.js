@@ -3,7 +3,7 @@ import { getUserByToken } from '../../redux/middleware/user.thunk'
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from '../navbar/navbar';
 import Card from '../card/card';
-import { getMoviesCreatedByMe } from '../../redux/middleware/movie.thunk';
+import { addMovie, getMoviesCreatedByMe, sampleMovies } from '../../redux/middleware/movie.thunk';
 import Carousel from '../carousel/carousel';
 
 const Homepage = () => {
@@ -20,26 +20,30 @@ const Homepage = () => {
           dispatch(getUserByToken(data))
           dispatch(getMoviesCreatedByMe({token,url:myUrl}))
         }
+        dispatch(sampleMovies())
     },[token])
 
   return (
     <div id="homepage">
         <Navbar />
-        <Carousel movies={myMovies} />
-        <div id="display-results">
-
-            {
-                isLoading && token ? <p>loading...</p> : <>
-
-                {
-                  [...myMovies,...movies].map((movie,index) => <div key={movie.name+index.toString()}> <Card movie={movie}/> </div> )
-                  // myMovies.map((movie,index) => <div key={movie.name+index.toString()}> <Card movie={movie}/> </div> )
-                }
-                
-                </>
-            }
-
-        </div>
+        { movies.length ? <>
+          <Carousel movies={movies} />
+          <div id="display-results">
+  
+              {
+                  isLoading && token ? <p>loading...</p> : <>
+  
+                  {
+                    [...myMovies,...movies].map((movie,index) => <div key={movie.name+index.toString()}> <Card movie={movie}/> </div> )
+                    // myMovies.map((movie,index) => <div key={movie.name+index.toString()}> <Card movie={movie}/> </div> )
+                  }
+                  
+                  </>
+              }
+  
+          </div>
+          </> : "loading..."
+        }
         
     </div>
   )

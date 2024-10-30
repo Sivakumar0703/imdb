@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { addMovie, getMovies, getMoviesCreatedByMe } from "../middleware/movie.thunk";
+import { addMovie, getMovies, getMoviesCreatedByMe, sampleMovies } from "../middleware/movie.thunk";
 
 
 
@@ -13,7 +13,7 @@ const movieSlice = createSlice({
     isLoading: false ,
     error : null,
     selectedCard:{},
-    myUrl:"http://localhost:8080/api/movie",
+    myUrl:"https://imdb-backend-nssv.onrender.com/api/movie",
     imdbUrl : "https://imdb188.p.rapidapi.com/api/v1"
   },
   reducers: {
@@ -47,6 +47,9 @@ const movieSlice = createSlice({
     .addCase(getMoviesCreatedByMe.fulfilled , (state,action) => { // get movies which are created by me
       state.myMovies = action.payload;
       state.isLoading = false;
+    })
+    .addCase(sampleMovies.fulfilled , (state,action) => { // sample movies data
+      state.movies = action.payload;
     })
   }
 
