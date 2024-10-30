@@ -53,6 +53,8 @@ html,body{
 
 .card{
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    height:420px;
+    overflow-y:hidden ;
 }
 
 /* profile */
@@ -133,4 +135,48 @@ html,body{
     padding:5px;
     border-radius: 5px;
     border: none;
+}
+
+/* view card details route */
+
+#view-details-container{
+    min-height: 100vh;
+ background: #757F9A;  
+ background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  
+ background: linear-gradient(to right, #D7DDE8, #757F9A); 
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.table-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid red;
+    padding: 5px;
+}
+
+.detail-image-container{
+    height:60vh;
+    width:40vw;
+}
+
+.detail-image-container > img{
+    height:100%;
+    width:100%;
+    object-fit: cover;
+}
+
+/* carousel */
+
+.carousel-item{
+    height:500px;
+    width:100%;
+}
+
+.carousel-item > img{
+    height:100%;
+    width:100%;
+    object-fit: cover;
 }

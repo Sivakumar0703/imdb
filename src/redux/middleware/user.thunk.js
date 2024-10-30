@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllUserByToken, getUserData , getUserDataByToken, updateUserByToken, userLogicAddRecentlyActedMovie } from '../../logics/user.logics';
+import { getAllUserByToken, getUserData , getUserDataByToken, updateUserByToken } from '../../logics/user.logics';
 
 
 
@@ -62,12 +62,12 @@ export const getAllUser = createAsyncThunk("user/getAllUser" ,
 );
 
 // update user movie list
-export const addRecentlyActedMovie = createAsyncThunk("user/addRecentlyActedMovie" , 
-    async function (data,thunkApi){
-        try {
-            return await userLogicAddRecentlyActedMovie(data);
-        } catch (error) {
-            console.log(thunkApi.rejectWithValue(error.message)) ;
-        }
-    }
-)
+// export const addRecentlyActedMovie = createAsyncThunk("user/addRecentlyActedMovie" , 
+//     async function (data,thunkApi){
+//         try {
+//             return await userLogicAddRecentlyActedMovie(data);
+//         } catch (error) {
+//             console.log(thunkApi.rejectWithValue(error.message)) ;
+//         }
+//     }
+// )

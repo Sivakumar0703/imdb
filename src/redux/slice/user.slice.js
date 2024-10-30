@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUser, getUser, getUserByToken, updateUser } from "../middleware/user.thunk";
+import { addRecentlyActedMovie, getAllUser, getUser, getUserByToken, updateUser } from "../middleware/user.thunk";
 // import { toast } from "react-toastify";
 
 
@@ -43,6 +43,9 @@ const userSlice = createSlice({
     .addCase(getAllUser.fulfilled , (state,action) => {
       state.userList = action.payload;
     })
+    // .addCase(addRecentlyActedMovie , (state,action) => {
+    //   state.userList = action.payload;
+    // })
 
   }
 

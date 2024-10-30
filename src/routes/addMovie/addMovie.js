@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import Navbar from '../../components/navbar/navbar'
 import { useDispatch, useSelector } from 'react-redux';
 import { addRecentlyActedMovie, getAllUser } from '../../redux/middleware/user.thunk';
@@ -7,6 +7,7 @@ import Modal from '../../components/modal/modal';
 import { toast } from 'react-toastify';
 import { movieLogicHandleImage } from '../../logics/movies.logics';
 import { addMovie } from '../../redux/middleware/movie.thunk';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddMovie = () => {
@@ -25,8 +26,12 @@ const AddMovie = () => {
     const [selectedProducer , setSelectedProducer] = useState([]);
     const [imageLoading , setImageLoading] = useState(false);
     const {myUrl,movies,myMovies} = useSelector(state => state.movieReducer);
+    const inputRef = useRef(null);
+    const navigate = useNavigate();
     console.log("add page",movies)
     console.log("selectedProducer",selectedProducer)
+
+
     function handleChange(e){
       e.preventDefault();
       if(e.target.name == "year"){
@@ -66,30 +71,46 @@ const AddMovie = () => {
       //   setImageLoading(false);
       //   console.log(error)
       // }
-      let data = {setImageLoading,setFormData,imageFile:e.target.files[0]}
+      let data = {setImageLoading,setFormData,imageFile:e.target.files[0]
+      }
       movieLogicHandleImage(data)
     }
 
     function addNewMovie(){
-      let data = {formData,url:myUrl,token,setFormData,setSelectedUsers,setSelectedProducer}
+      let data = {formData,url:myUrl,token,setFormData,
+        setSelectedUsers,
+        setSelectedProducer,
+        userUrl:url,
+        ref:inputRef,
+        navigate:navigate
+      }
       dispatch(addMovie(data))
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-      let firstRun = false;
+    //   let firstRun = false;
 
-      if(firstRun){
-        console.log("----------------------------------------");
-        const lastAddedMovie = [...myMovies].reverse();
-        let data = {selectedProducer,selectedUsers,movieName:formData.title,movie:lastAddedMovie[0],token,myUrl}
-        dispatch(addRecentlyActedMovie(data));
-        firstRun = false;
-      }
+    //   if(firstRun){
+    //     console.log("----------------------------------------");
+    //     const lastAddedMovie = [...myMovies].reverse();
+    //     let data = {selectedProducer,
+    //       selectedUsers,
+    //       movieName:formData.title,
+    //       movie:lastAddedMovie[0],
+    //       token,
+    //       myUrl,
+    //       setFormData,
+    //       setSelectedUsers,
+    //       setSelectedProducer
+    //     }
+    //     dispatch(addRecentlyActedMovie(data));
+    //     firstRun = false;
+    //   }
 
-      firstRun = true;
+    //   firstRun = true;
 
-    },[myMovies])
+    // },[myMovies])
 
 
 
@@ -171,7 +192,7 @@ const AddMovie = () => {
 
         <div className="input-container">
           <label htmlFor="poster" className="label">MOVIE POSTER</label> &nbsp; {imageLoading ? <span>Uploading...</span> : ""} <br/>
-          <input type='file' accept='image/png,image/jpg,image/jpeg' name="image" id="poster" onChange={handleImage}  required />
+          <input type='file' accept='image/png,image/jpg,image/jpeg' name="image" id="poster" onChange={handleImage}  required ref={inputRef} />
         </div>
 
         <hr/>

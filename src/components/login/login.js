@@ -1,9 +1,11 @@
 
 import "../register/register.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch , useSelector } from "react-redux"
 import { getUser } from "../../redux/middleware/user.thunk"
 import { Navigate, useNavigate } from "react-router-dom"
+import { getMoviesCreatedByMe } from "../../redux/middleware/movie.thunk"
+import { toast } from "react-toastify"
 
 const Login = () => {
 
@@ -11,22 +13,22 @@ const Login = () => {
   const[password,setPassword] = useState("")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {url} = useSelector(state => state.userReducer);
+  const {url,isLoading} = useSelector(state => state.userReducer);
+  const {myUrl} = useSelector(state => state.movieReducer);
+
   const token = sessionStorage.getItem("user");
+
+  function login(){
+    const data = {email,password,url};
+    dispatch(getUser(data))
+    navigate('/')
+  }
+
 
   if(token){
     return <Navigate to="/" />
   }
-  
 
-
- function login(){
-    const data = {email,password,url};
-    dispatch(getUser(data))
-    navigate('/')
-    //   setEmail("")
-    //   setPassword("")
-  }
 
   return (
     <div id="register-page">

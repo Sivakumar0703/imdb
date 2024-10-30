@@ -8,10 +8,11 @@ import Homepage from "./components/homepage/homepage";
 import Profile from "./components/profile/profile";
 import AddMovie from "./routes/addMovie/addMovie";
 import ProtectRoutes from "./components/protectRoutes/protectRoutes";
+import ViewCard from "./routes/viewCard/viewCard";
 
 
 function App() {
-
+  console.log("i am")
   return (
     <div className="App">
        <Provider store={store}>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/profile" element={ <ProtectRoutes> <Profile />  </ProtectRoutes> } />
         <Route path="/add_movie" element={ <ProtectRoutes> <AddMovie /> </ProtectRoutes>} />
+        <Route path="/view_details/:id" element={ <ProtectRoutes> <ViewCard /> </ProtectRoutes>} />
       </Routes>
       </Provider> 
     </div>

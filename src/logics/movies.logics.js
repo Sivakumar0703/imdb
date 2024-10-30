@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { userLogicAddRecentlyActedMovie } from "./user.logics";
 
 export async function getMoviesData(data){
     try {
@@ -65,10 +66,11 @@ export async function movieLogicHandleImage(handleImageData){
     }
 }
 
-export async function movieLogicAddNewMovie(data){  
+export async function movieLogicAddNewMovie(data){ 
+    console.log(data.formData) 
     try {
         if(data.formData.image){
-
+            
             for(const key in data.formData){
                 if(!data.formData[key]){
                   toast.warn("please fill all the fields".toUpperCase())
@@ -102,17 +104,23 @@ export async function movieLogicAddNewMovie(data){
          });
          
          const response = await addNewMovie.json();
+
+         const latestMovie = response.movies.reverse();
          console.log("post movie",response.movies)
-        //  data.setFormData({
-        //     title:"",
-        //     year:"",
-        //     genre:"",
-        //     stars:[],
-        //     image:"",
-        //     producer:[]
-        //  })
-        //  data.setSelectedUsers([])
-        //  data.setSelectedProducer([])
+         const recentlyActedPayload = {
+            myUrl:data.userUrl,
+            starsId:starsId ,
+            producerId:producerId,
+            token:data.token,
+            movieId:latestMovie[0]._id,
+            setSelectedUsers:data.setSelectedUsers,
+            setSelectedProducer:data.setSelectedProducer,
+            setFormData:data.setFormData,
+            ref:data.inputRef,
+            navigate:data.navigate
+         }
+         userLogicAddRecentlyActedMovie(recentlyActedPayload)
+        
          return response.movies
         } else {
             return toast.warn("please select the image".toUpperCase());
@@ -141,4 +149,13 @@ export async function movieLogicGetMoviesCreatedByMe(data){
         toast.error("error in fetching movies data".toUpperCase());
         console.log("error in fetching movies data",error)
     }
+}
+
+// incase if we want to categorize the search get additional param(title/actor/director) so we can match the search
+export function searchResultOnMyMovies(movies,searchString){
+    if(searchString.length){
+      const result = movies.filter((movie) => movie.title.includes(searchString));
+      return result
+    }
+    return movies
 }

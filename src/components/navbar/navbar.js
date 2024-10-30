@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getMovies } from "../../redux/middleware/movie.thunk";
+import { searchResultOnMyMovies } from "../../logics/movies.logics";
+import { searchResultForMyMovies } from "../../redux/slice/movie.slice";
 
 const Navbar = () => {
 
     const [search , setSearch] = useState("");
-    const {myUrl,imdbUrl} = useSelector(state => state.movieReducer);
+    const {myUrl,imdbUrl,myMovies,get} = useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
     const token = sessionStorage.getItem("user");
     const navigate = useNavigate();
@@ -15,6 +17,8 @@ const Navbar = () => {
         e.preventDefault();
         let data = {token , myUrl , imdbUrl , search  }
         dispatch(getMovies(data))
+        const searchResultForMymovies = searchResultOnMyMovies(myMovies,search)
+        dispatch(searchResultForMyMovies(searchResultForMymovies))
     }
 
     function logout(){

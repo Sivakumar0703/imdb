@@ -152,12 +152,11 @@ export function userLogicsTogglePage(e){
 // selectedProducer,selectedUsers,movieName:formData.title,movie:lastAddedMovie[0],token,myUrl
 export async function userLogicAddRecentlyActedMovie(data){
     try {
-        const starsId = data.selectedUsers.map((movieStar) => movieStar._id);
-        const producerId = data.selectedProducer[0]._id;
-        if(data.movieName == data.movie.title){
+        const starsId = data.starsId;
+        const producerId = data.producerId;
 
             for(let i=0; i<starsId.length; i++){
-                let payload = {actorId:starsId[i] , movieId:data.movie._id , isProducer:false }
+                let payload = {actorId:starsId[i] , movieId:data.movieId , isProducer:false }
                 await fetch(`${data.myUrl}/update_acted_movie`, {
                     method: 'PUT',
                     headers: {
@@ -169,19 +168,27 @@ export async function userLogicAddRecentlyActedMovie(data){
             }
 
             // for producer
-            const newData = await fetch(`${data.myUrl}/update_acted_movie`, {
+            await fetch(`${data.myUrl}/update_acted_movie`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization' : `Bearer ${data.token}`
                 },
-                body: JSON.stringify({actorId:producerId , movieId:data.movie._id , isProducer:true}),
+                body: JSON.stringify({actorId:producerId , movieId:data.movieId , isProducer:true}),
             });
-            const response = await newData.json();
-            return response.users
-        } else {
-            toast.error("movie title miss match".toUpperCase());
-        }
+            data.setFormData({
+            title:"",
+            year:"",
+            genre:"",
+            stars:[],
+            image:"",
+            producer:[]
+            })
+            data.setSelectedUsers([])
+            data.setSelectedProducer([])
+            data.inputRef.current.value = null;
+       console.log("final");
+       data.navigate("/");
     } catch (error) {
         
     }
